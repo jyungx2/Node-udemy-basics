@@ -1,5 +1,5 @@
 const http = require("http"); // global module(without './')
-
+const fs = require("fs"); // file system module
 // function rqListener(req, res) {}
 
 // Hey! please look for this function with this name and execute it for every incoming request.
@@ -11,6 +11,8 @@ const server = http.createServer((req, res) => {
 
   // 33. Routing Requests
   const url = req.url;
+  const method = req.method;
+
   if (url === "/") {
     res.write("<html>");
     res.write("<head><title>Enter Message</title></head>");
@@ -22,6 +24,14 @@ const server = http.createServer((req, res) => {
     return res.end(); // 함수 실행을 멈춤(quit function execution)
   }
 
+  // 34. Redirecting Requests
+  if (url === "/message" && method === "POST") {
+    fs.writeFileSync("message.txt", "DUMMY");
+    // res.writeHead(302, {}); // ✨ THIS allows us to write some meta info in one go.(statusCode & setHeader)
+    res.statusCode = 302; // 302는 **"Found" (Temporary Redirect)**를 의미하는 HTTP 상태 코드로, 클라이언트가 다른 URL로 이동해야 함을 나타냄
+    res.setHeader("Location", "/"); // Location 헤더를 설정하여 클라이언트가 이동해야 할 주소를 지정 => /(홈페이지)로 리다이렉트하도록 지정
+    return res.end(); // 응답을 종료하여 아래 코드가 실행되지 않도록 방지 (즉, 리다이렉트 후 추가적인 응답 처리를 하지 않음)
+  }
   // 31. Sending Responses
   // setHeader(): allows us to set a new header
   // ✅ 나중에 express.js 프레임워크로 더 간단하게 하는 방법 배울 예정.
