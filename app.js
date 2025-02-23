@@ -8,6 +8,7 @@ const http = require("http"); // global module(without './')
 // createServer Callback function: It's called by Node.js whenever a request reaches our server.
 const server = http.createServer((req, res) => {
   console.log(req);
+  process.exit(); // server 실행을 멈추기 위해 작성해야 하는 코드(=> 웹페이지 동작x, 이 코드 없이 서버는 무한대로 계속해서 실행되는 게 원칙, process.exit()은 말그대로 hard exited our event loop and therefore program shuts down)
 });
 
 // listen() is a process where Node.js will not immediately exit our script but where Node.js will instead ✨keep this running to listen for incoming requests.✨
