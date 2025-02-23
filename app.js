@@ -9,6 +9,20 @@ const http = require("http"); // global module(without './')
 const server = http.createServer((req, res) => {
   console.log(req.url, req.method, req.headers); // request 정보 중에 중요한 정보들만 터미널에 출력해보자. (req.url은 url주소('/', '/test', etc...)에 따라 출력값이 달라진다.)
 
+  // 33. Routing Requests
+  const url = req.url;
+  if (url === "/") {
+    res.write("<html>");
+    res.write("<head><title>Enter Message</title></head>");
+    // 👍 input의 name속성을 지정해주면 유저가 입력한 값이 request 변수에 자동으로 포함되어 전달되어진다.
+    res.write(
+      '<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Send</button></form></body>'
+    );
+    res.write("</html>");
+    return res.end(); // 함수 실행을 멈춤(quit function execution)
+  }
+
+  // 31. Sending Responses
   // setHeader(): allows us to set a new header
   // ✅ 나중에 express.js 프레임워크로 더 간단하게 하는 방법 배울 예정.
   res.setHeader("Content-Type", "text/html");
@@ -17,7 +31,7 @@ const server = http.createServer((req, res) => {
   res.write("<body><h1>Hello from my Node.js Server!</h1></body>");
   res.write("</html>");
   res.end(); // response를 다 만들었으면 end()로 명시적으로 끝내줌.
-  res.write(); // 🚨error: end() 코드 이후로 response 변경 불가능
+  // res.write(); // 🚨error: end() 코드 이후로 response 변경 불가능
 
   // process.exit(); // server 실행을 멈추기 위해 작성해야 하는 코드(=> 웹페이지 동작x, 이 코드 없이 서버는 무한대로 계속해서 실행되는 게 원칙, process.exit()은 말그대로 hard exited our event loop and therefore program shuts down)
 });
