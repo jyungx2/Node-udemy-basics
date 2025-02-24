@@ -1,3 +1,4 @@
+/*
 const http = require("http"); // Node.js 내장 http 모듈을 불러옵니다.
 const routes = require("./routes");
 
@@ -13,3 +14,12 @@ console.log(routes.someText); // we can simply output text from one file.
 // listen() is a process where Node.js will not immediately exit our script but where Node.js will instead ✨keep this running to listen for incoming requests.✨
 // 🖍️ 서버를 시작하고 포트 3000에서 요청을 대기합니다. Node.js의 이벤트 루프는 비동기 이벤트(예: req.on('data'), req.on('end'))를 관리합니다.
 server.listen(3000); // node app.js 를 치면 커서가 그 다음줄에 고정된다 -> app.js파일 실행이 끝나지 않고 계속해서 돌아간다는 뜻.(onging looping process)
+*/
+
+// 60. Installing Express.js
+const http = require("http");
+const express = require("express");
+const app = express();
+
+const server = http.createServer(app);
+server.listen(3000);
