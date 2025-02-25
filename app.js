@@ -17,7 +17,7 @@ server.listen(3000); // node app.js 를 치면 커서가 그 다음줄에 고정
 */
 
 // 60. Installing Express.js
-const http = require("http");
+// const http = require("http"); // 💫Handled by express.js💫
 const express = require("express");
 const app = express();
 
@@ -33,5 +33,7 @@ app.use((req, res, next) => {
   res.send("<h1>Hello from Express!</h1>"); // sending a response (by using .send() instead of write() & end() thanks to express framework!)
 });
 
-const server = http.createServer(app);
-server.listen(3000);
+// 💫Handled by express.js💫
+// const server = http.createServer(app);
+// server.listen(3000);
+app.listen(3000);
