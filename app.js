@@ -17,23 +17,22 @@ server.listen(3000); // node app.js 를 치면 커서가 그 다음줄에 고정
 */
 
 // 60. Installing Express.js
-// const http = require("http"); // 💫Handled by express.js💫
 const express = require("express");
 const app = express();
 
-// 1. use method: express().use()
-// 2. function & argument of use(): next = function
-app.use((req, res, next) => {
-  console.log("In the middleware!");
-  next(); // Allows the request to continue to the next middleware in line.
+app.use("/", (req, res, next) => {
+  console.log("This will always run");
+  next();
 });
 
-app.use((req, res, next) => {
+app.use("/add-product", (req, res, next) => {
+  console.log("add product!");
+  res.send("<h1>The 'Add Product' Page</h1>");
+});
+
+app.use("/", (req, res, next) => {
   console.log("In another middleware!");
-  res.send("<h1>Hello from Express!</h1>"); // sending a response (by using .send() instead of write() & end() thanks to express framework!)
+  res.send("<h1>Hello from Express!</h1>");
 });
 
-// 💫Handled by express.js💫
-// const server = http.createServer(app);
-// server.listen(3000);
 app.listen(3000);
