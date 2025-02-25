@@ -1,3 +1,5 @@
+const path = require("path");
+
 const express = require("express");
 const bodyParser = require("body-parser"); // 💾 "npm install --save body-parser"
 
@@ -15,7 +17,7 @@ app.use(shopRoutes);
 // 📌 '/'에 대한 응답처리 미들웨어가 app.get()으로 바뀌면서 라우터 파일 내 지정하지 않은 주소창으로 들어올 때 표시할 페이지 추가할 필요 있음..
 app.use((req, res, next) => {
   // send()를 부르기 전까지 chain method로 여러 다른 메소드 호출 가능!
-  res.status(404).send("<h1>Page not found</h1>");
+  res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
 });
 
 app.listen(3000);
