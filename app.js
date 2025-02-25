@@ -18,16 +18,23 @@ server.listen(3000); // node app.js 를 치면 커서가 그 다음줄에 고정
 
 // 60. Installing Express.js
 const express = require("express");
+const bodyParser = require("body-parser"); // 💾 "npm install --save body-parser"
+
 const app = express();
 
-app.use("/", (req, res, next) => {
-  console.log("This will always run");
-  next();
-});
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/add-product", (req, res, next) => {
   console.log("add product!");
-  res.send("<h1>The 'Add Product' Page</h1>");
+  res.send(
+    '<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>'
+  );
+});
+
+app.use("/product", (req, res, next) => {
+  console.log(req.body); // undefined -> we need another middleware(=body-parser lib 설치)!
+  // body-parser 미들웨어 코드 작성 후, {title: 'Book'}이라고 뜨는 것을 확인 ✅
+  res.redirect("/");
 });
 
 app.use("/", (req, res, next) => {
